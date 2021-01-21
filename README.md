@@ -159,3 +159,10 @@ git clone git@github.com:thinknetica/test_student_repo.git
 ![Django_Lab_01%205.png](https://user-images.githubusercontent.com/968537/104716334-de0b4e00-5738-11eb-8980-160b7554ddbf.png)
 
 Теперь можно приступать к следующей задаче и повторить весь процесс.
+
+
+# Установка
+* `pip install -r requirements.txt`
+* `python manage.py migrate`
+* `python manage.py createsuperuser`
+* `python manage.py collectstatic` - либо python3/python3.X
