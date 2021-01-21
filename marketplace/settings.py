@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -128,5 +127,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = "media"
 MEDIA_URL = "/media/"
 
-#ckeditor
+# ckeditor
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
