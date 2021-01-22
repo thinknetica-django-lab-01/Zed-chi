@@ -1,12 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 
 class Product(models.Model):
     name = models.CharField("название", max_length=50)
     description = models.TextField("описание", max_length=300, blank=True)
     price = models.DecimalField("цена", max_digits=8, decimal_places=2)
-    seller = models.ForeignKey()
+    seller = models.ForeignKey("Seller", on_delete=models.CASCADE)
     category = models.ForeignKey(
         "ProductCategory",
         null=True,
@@ -67,5 +67,5 @@ class Tag(models.Model):
         return self.title
 
 
-class Seller(AbstractUser):
+class Seller(User):
     company_name = models.CharField("название", max_length=50)
