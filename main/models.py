@@ -58,7 +58,8 @@ class ProductCategory(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField("тег", max_length=50)    
+    title = models.CharField("тег", max_length=50)
+
     class Meta:
         verbose_name = "тег"
         verbose_name_plural = "теги"
