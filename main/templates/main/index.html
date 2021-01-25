@@ -5,4 +5,10 @@
 
 {% block content %}
     Test content
+    {% if turn_on_block %}
+        <div style="border:1px dashed green;">
+            <p>turn_on_block var is True</p>
+            <p>Username is  <span style="color:red">{{name}}</span> </p>
+        </div>
+    {% endif %}
 {% endblock %}
