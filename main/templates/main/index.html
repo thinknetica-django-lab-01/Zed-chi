@@ -3,7 +3,10 @@
     HomePage
 {% endblock %}
 
-{% block content %}
+{% block header %}
+    {% include "./header.html" with username=name %}
+{% endblock %}
+{% block content %}        
     Test content
     {% if turn_on_block %}
         <div style="border:1px dashed green;">
