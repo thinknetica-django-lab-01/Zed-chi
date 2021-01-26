@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block header %}
-    {% include "./header.html" with username=name %}
+    {% include "./header.html"%}
 {% endblock %}
 {% block content %}        
-    <h2>Goods</h2>
+    <h2>Товары в продаже</h2>
     <article class="row">
         
         {% for product in products %}
