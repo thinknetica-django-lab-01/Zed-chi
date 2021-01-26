@@ -1,4 +1,5 @@
 {% extends "./base.html" %}
+{% load main_tags %}
 {% block title %} 
     HomePage
 {% endblock %}
@@ -14,4 +15,8 @@
             <p>Username is  <span style="color:red">{{name}}</span> </p>
         </div>
     {% endif %}
+
+    <p>
+        Current time is <span>{% current_time %}</span>
+    </p>
 {% endblock %}
