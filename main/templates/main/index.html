@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block header %}
-    {% include "./header.html" with username=name %}
+    {% include "./header.html"%}
     <div class="jumbotron">
         <h1>Добро пожаловать в магазин, {{name}}</h1>
         <p>Выбирайте, покупайте, приходите еще</p>
@@ -15,6 +15,13 @@
     </div>
 {% endblock %}
 {% block content %}        
-    ...
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="/goods">
+                <button type="button" class="btn btn-primary btn-block">Посмотреть все товары</button> 
+            </a>   
+            
+        </div>
+    </div>
 
 {% endblock %}
