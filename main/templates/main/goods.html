@@ -11,16 +11,16 @@
     <h2>Goods</h2>
     <article class="row">
         
-        {% for good in goods %}
+        {% for product in products %}
             <div class="card col-lg-4 mx-1 my-1 px-0" style="max-width: 20rem;">
-                <h3 class="card-header bg-success text-light">{{good.name}}</h3>
+                <h3 class="card-header bg-success text-light">{{product.name}}</h3>
                 <div class="card-body">
-                  <h4 class="card-title">{{good.category.name}}</h4>
-                  <p class="card-text">{{good.description}}</p>                  
+                  <h4 class="card-title">{{product.category.name}}</h4>
+                  <p class="card-text">{{product.description}}</p>                  
                 </div>
                 <div class="card-footer">
-                    <i class="col-sm-6">{{good.price}} ₽</i>
-                    <a href="/goods/{{good.id}}" class="col-sm-6 card-link btn btn-primary">Подробнее</a>
+                    <i class="col-sm-6">{{product.price}} ₽</i>
+                    <a href="/goods/{{product.id}}" class="col-sm-6 card-link btn btn-primary">Подробнее</a>
                 </div>
                 
               </div>
