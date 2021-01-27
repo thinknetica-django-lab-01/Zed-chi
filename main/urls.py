@@ -9,5 +9,5 @@ urlpatterns = [
     path("about/", views.flatpage, {"url": "/about/"}, name="about"),
     path("contacts/", views.flatpage, {"url": "/contacts/"}, name="contacts"),
     path("goods", ProductsListView.as_view(), name="goods_list"),
-    path("goods/<int:pk>", ProductDetailView.as_view(), name="goods_list"),
+    path("goods/<int:pk>", ProductDetailView.as_view(), name="good_detail"),
 ]
