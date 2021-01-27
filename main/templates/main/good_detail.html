@@ -1,0 +1,51 @@
+{% extends "./base.html" %}
+{% load main_tags %}
+{% block title %} 
+    Купить - {{ product.name}}
+{% endblock %}
+
+{% block header %}
+    {% include "./header.html"%}
+{% endblock %}
+{% block content %}        
+    <div class="row">
+        <a href="/goods">
+            <span class="badge badge-secondary mx-1">
+                Все товары            
+            </span>
+        </a>
+        <a href="#">
+            <span class="badge badge-secondary mx-1">
+                Категории            
+            </span>
+        </a>
+        <a href="#">
+            <span class="badge badge-secondary mx-1">
+                {{product.category.name}}
+            </span>
+        </a>                
+    </div>
+    <div class="row">
+        <h2>{{product.name}}</h2>
+    </div>
+    <div class="row">
+        <div class="image_field col-sm-8">Product Image</div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{product.price}} ₽</h4>                    
+                    <a href="#" class="btn btn-primary">В корзину</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                {{ product.description}}        
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock %}

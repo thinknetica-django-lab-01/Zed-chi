@@ -1,26 +1,27 @@
 {% extends "./base.html" %}
 {% load main_tags %}
 {% block title %} 
-    HomePage
+    Главная страница
 {% endblock %}
 
 {% block header %}
-    {% include "./header.html" with username=name %}
+    {% include "./header.html"%}
+    <div class="jumbotron">
+        <h1>Добро пожаловать в магазин, {{name}}</h1>
+        <p>Выбирайте, покупайте, приходите еще</p>
+        <p>
+            Время <span>{% current_time %}</span>
+        </p>
+    </div>
 {% endblock %}
 {% block content %}        
-    Test content
-    {% if turn_on_block %}
-        <div style="border:1px dashed green;">
-            <p>turn_on_block var is True</p>
-            <p>Username is  <span style="color:red">{{name}}</span> </p>
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="/goods">
+                <button type="button" class="btn btn-primary btn-block">Посмотреть все товары</button> 
+            </a>   
+            
         </div>
-    {% endif %}
+    </div>
 
-    <p>
-        Current time is <span>{% current_time %}</span>
-    </p>
-
-    <p>
-        TestString - {{ 'TestString'|reverse }}
-    </p>
 {% endblock %}
