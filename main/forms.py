@@ -10,7 +10,7 @@ class ProfileForm(forms.ModelForm):
     lastname = forms.CharField()
     email = forms.EmailField()
     address = forms.CharField()
-
+    age = forms.IntegerField(min_value=18, max_value=150)
     class Meta:
         model = User
         fields = [
@@ -18,4 +18,5 @@ class ProfileForm(forms.ModelForm):
             "lastname",
             "email",
             "address",
-        ]  # list of fields you want from model
+            "age",
+        ]
