@@ -1,30 +1,85 @@
 {% extends "./base.html" %}
 {% load main_tags %}
-{% block title %} 
-    Товары
+{% block title %}
+Товары
 {% endblock %}
 
 {% block header %}
-    {% include "./header.html"%}
+{% include "./header.html"%}
 {% endblock %}
-{% block content %}        
-    <h2>Товары в продаже</h2>
-    <article class="row">
-        
+{% block content %}
+<nav class="navbar navbar-expand-sm bg-secondary navbar-dark row" >
+
+
+    {% if search_tag %}
+    <div class="nav-item">
+        <a class="nav-link badge badge-success mx-1 text-light" href="/goods">все товары</a>
+    </div>
+
+    <span class="navbar-text mx-2">Товары в продаже под тегом "{{search_tag}}"</span>
+    {% else %}
+    <span class="navbar-text">Товары в продаже</span>
+    {% endif %}
+
+</nav>
+
+
+<article class="row">
+
+    <div class="section col-lg-10 row justify-content-between">
         {% for product in products %}
-            <div class="card col-lg-4 mx-1 my-1 px-0" style="max-width: 20rem;">
-                <h3 class="card-header bg-success text-light">{{product.name}}</h3>
-                <div class="card-body">
-                  <h4 class="card-title">{{product.category.name}}</h4>
-                  <p class="card-text">{{product.description}}</p>                  
-                </div>
-                <div class="card-footer">
-                    <i class="col-sm-6">{{product.price}} ₽</i>
-                    <a href="/goods/{{product.id}}" class="col-sm-6 card-link btn btn-primary">Подробнее</a>
-                </div>
-                
-              </div>
+        <div class="card col-lg-3 mx-1 my-1 px-0" style="max-width: 20rem;">
+            <h3 class="card-header bg-success text-light">{{product.name}}</h3>
+            <div class="card-body">
+                <h4 class="card-title">{{product.category.name}}</h4>
+                <p class="card-text">{{product.description}}</p>
+            </div>
+            <div class="card-footer">
+                <i class="col-sm-6">{{product.price}} ₽</i>
+                <a href="/goods/{{product.id}}" class="col-sm-6 card-link btn btn-primary">Подробнее</a>
+            </div>
+
+        </div>
         {% endfor %}
-    </article>
+    </div>
+
+    <div class="aside col-lg-2">
+        <div class="container p-3 my-3 border">
+            <h4>Тэги</h4>
+            <hr>
+            {% for tag in tags %}        
+            <div class="badge badge-secondary mx-1">
+                <a href="/goods?tag={{tag.title}}" class="text-light">{{tag.title}}</a>
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+
+</article>
+
+{% if page_obj.is_paginated %}
+<ul class="pagination ">
+    {% if page_obj.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page=1&tag={{search_tag}}">&laquo; начало</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&tag={{search_tag}}">&laquo;</a></li>
+    {% endif %}
+
+
+    <li class="page-item">
+        <div class="page-link" href="#">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</div>
+    </li>
+
+
+    {% if page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&tag={{search_tag}}">&raquo;</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&tag={{search_tag}}">конец &raquo;</a></li>
+    {% endif %}
+</ul>
+{% endif %}
+
+
+
+
 
 {% endblock %}
