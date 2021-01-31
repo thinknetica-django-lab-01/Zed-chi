@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
 from django.shortcuts import render
-from .models import Product
+from .models import Product, Tag
 
 
 def homepage(request):
@@ -23,12 +23,8 @@ class ProductsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["search_tag"] = self.request.GET.get("tag")
-        tags = set()
-        for product in context["products"]:
-            for tag in product.tags.all():
-                tags.add(tag)
-        context["tags"] = tags
+        context["search_tag"] = self.request.GET.get("tag")               
+        context["tags"] = Tag.objects.all()
 
         return context
 
