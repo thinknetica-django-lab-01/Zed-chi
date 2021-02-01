@@ -1,0 +1,25 @@
+{% extends "./base.html" %}
+{% load main_tags %}
+{% block title %} 
+    Главная страница
+{% endblock %}
+
+{% block header %}
+    {% include "./header.html"%}
+    <div class="jumbotron">
+        <h1>Добро пожаловать в магазин, {{name}}</h1>
+        <p>Выбирайте, покупайте, приходите еще</p>
+        <p>
+            Время <span>{% current_time %}</span>
+        </p>
+    </div>
+{% endblock %}
+{% block content %}        
+    <div class="row">
+        <form action="" method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" class="button">
+        </form>
+    </div>
+{% endblock %}

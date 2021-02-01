@@ -21,7 +21,9 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
       </form>
       {% if request.user.username %}
-        <span class="mx-2 badge badge-secondary">Профиль {{request.user.username}}</span>
+        <span class="mx-2 badge badge-secondary">          
+          <a class="text-light" href="/accounts/profile">Профиль {{request.user.username}}</a>
+        </span>
       {% endif %}
     </div>
   </nav>
