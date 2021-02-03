@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView, UpdateView
 
 # from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product
+from .models import Product, Tag
 from django.contrib.auth.models import User
 from .forms import ProfileForm
 
@@ -26,12 +26,8 @@ class ProductsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["search_tag"] = self.request.GET.get("tag")
-        tags = set()
-        for product in context["products"]:
-            for tag in product.tags.all():
-                tags.add(tag)
-        context["tags"] = tags
+        context["search_tag"] = self.request.GET.get("tag")               
+        context["tags"] = Tag.objects.all()
 
         return context
 
