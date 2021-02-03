@@ -1,7 +1,10 @@
-from django.views.generic import ListView, DetailView
-from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView, UpdateView
+
+# from django.core.paginator import Paginator
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Tag
+from django.contrib.auth.models import User
+from .forms import ProfileForm
 
 
 def homepage(request):
@@ -41,3 +44,19 @@ class ProductDetailView(DetailView):
     model = Product
     context_object_name = "product"
     template_name = "main/good_detail.html"
+
+
+class ProfileView(UpdateView):
+    template_name = "main/profile.html"
+    form_class = ProfileForm
+    success_url = "/goods/"
+    model = User
+
+    def get_object(self):
+        return User.objects.get(id=self.request.user.id)
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.username:
+            return redirect("main:homepage")
+
+        return super().get(request, *args, **kwargs)
