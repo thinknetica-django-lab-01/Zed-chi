@@ -1,4 +1,6 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
@@ -44,7 +46,8 @@ class ProductDetailView(DetailView):
     template_name = "main/good_detail.html"
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
+    login_url = '/admin/'    
     template_name = "main/profile.html"
     form_class = ProfileForm
     success_url = "/goods"
@@ -53,11 +56,7 @@ class ProfileView(UpdateView):
     def get_object(self):
         return User.objects.get(id=self.request.user.id)
 
-    def get(self, request, *args, **kwargs):
-        if not self.request.user.username:
-            return redirect("main:homepage")
 
-        return super().get(request, *args, **kwargs)
 
 
 class AddGoodView(CreateView):
