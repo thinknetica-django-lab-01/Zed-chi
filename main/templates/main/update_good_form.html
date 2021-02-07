@@ -1,0 +1,21 @@
+{% extends "./base.html" %}
+{% load main_tags %}
+{% block title %} 
+    Главная страница
+{% endblock %}
+
+{% block header %}
+    {% include "./header.html"%}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <h2>Изменить товар</h2>
+    </div>
+    <div class="row">        
+        <form action="" method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" class="button">
+        </form>
+    </div>
+{% endblock %}

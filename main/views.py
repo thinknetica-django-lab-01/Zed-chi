@@ -68,7 +68,7 @@ class AddGoodView(CreateView):
 
 
 class GoodUpdateView(UpdateView):
-    template_name = "main/add_good_form.html"
+    template_name = "main/update_good_form.html"
     form_class = GoodForm
     model = Product
     success_url = "/goods"
