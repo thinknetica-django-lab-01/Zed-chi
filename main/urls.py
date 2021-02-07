@@ -1,7 +1,14 @@
 from django.contrib.flatpages import views
 from django.urls import path
 
-from .views import homepage, ProductsListView, ProductDetailView, ProfileView, AddGoodView, GoodUpdateView
+from .views import (
+    homepage,
+    ProductsListView,
+    ProductDetailView,
+    ProfileView,
+    AddGoodView,
+    GoodUpdateView,
+)
 
 app_name = "main"
 urlpatterns = [
