@@ -1,10 +1,8 @@
-from django.views.generic import ListView, DetailView, UpdateView
-
-# from django.core.paginator import Paginator
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Tag
 from django.contrib.auth.models import User
-from .forms import ProfileForm
+from .forms import ProfileForm, GoodForm
 
 
 def homepage(request):
@@ -28,7 +26,6 @@ class ProductsListView(ListView):
         context = super().get_context_data(**kwargs)
         context["search_tag"] = self.request.GET.get("tag")               
         context["tags"] = Tag.objects.all()
-
         return context
 
     def get_queryset(self):
@@ -49,7 +46,7 @@ class ProductDetailView(DetailView):
 class ProfileView(UpdateView):
     template_name = "main/profile.html"
     form_class = ProfileForm
-    success_url = "/goods/"
+    success_url = "/goods"
     model = User
 
     def get_object(self):
@@ -60,3 +57,9 @@ class ProfileView(UpdateView):
             return redirect("main:homepage")
 
         return super().get(request, *args, **kwargs)
+
+class AddGoodView(CreateView):
+    template_name = "main/add_good_form.html"    
+    form_class = GoodForm
+    model = Product
+    success_url = "/goods"
