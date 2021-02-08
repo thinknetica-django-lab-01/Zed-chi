@@ -1,10 +1,9 @@
-from django.views.generic import ListView, DetailView, UpdateView
-
-# from django.core.paginator import Paginator
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Tag
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from .forms import ProfileForm
+
+from .models import Product, Tag
+from .forms import ProfileForm, GoodForm
 
 
 def homepage(request):
@@ -12,7 +11,7 @@ def homepage(request):
         request.user.username if request.user.is_authenticated else "Гость"
     )
     return render(
-        request, "main/index.html", {"turn_on_block": True, "name": username}
+        request, "main/index.html", {"turn_on_block": True, "name": username},
     )
 
 
@@ -26,16 +25,15 @@ class ProductsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["search_tag"] = self.request.GET.get("tag")               
+        context["search_tag"] = self.request.GET.get("tag")
         context["tags"] = Tag.objects.all()
-
         return context
 
     def get_queryset(self):
         qset = super().get_queryset()
         if self.request.GET.get("tag"):
             qset = Product.objects.filter(
-                tags__title__contains=self.request.GET.get("tag")
+                tags__title__contains=self.request.GET.get("tag"),
             )
         return qset
 
@@ -49,7 +47,7 @@ class ProductDetailView(DetailView):
 class ProfileView(UpdateView):
     template_name = "main/profile.html"
     form_class = ProfileForm
-    success_url = "/goods/"
+    success_url = "/goods"
     model = User
 
     def get_object(self):
@@ -60,3 +58,17 @@ class ProfileView(UpdateView):
             return redirect("main:homepage")
 
         return super().get(request, *args, **kwargs)
+
+
+class AddGoodView(CreateView):
+    template_name = "main/add_good_form.html"
+    form_class = GoodForm
+    model = Product
+    success_url = "/goods"
+
+
+class GoodUpdateView(UpdateView):
+    template_name = "main/update_good_form.html"
+    form_class = GoodForm
+    model = Product
+    success_url = "/goods"

@@ -71,5 +71,5 @@ class Tag(models.Model):
 class Seller(User):
     company_name = models.CharField("название", max_length=50)
     description = models.TextField(
-        max_length=500, null=False, blank=False, default="..."
+        max_length=500, null=False, blank=False, default="...",
     )
