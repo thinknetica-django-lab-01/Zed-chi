@@ -10,18 +10,25 @@ from .forms import ProfileForm, GoodForm
 
 
 class HomepageView(TemplateView):
+    """ Отрисовка начальной страницы """
+
     template_name = "main/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['turn_on_block'] = True
-        context["name"] = self.request.user.username if self.request.user.is_authenticated else "Гость"
+        context["turn_on_block"] = True
+        context["name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Гость"
+        )
         return context
 
 
 class ProductsListView(ListView):
-    paginate_by = 10
+    """ Отрисовка страницы товаров """
 
+    paginate_by = 10
     model = Product
     context_object_name = "products"
     queryset = Product.objects.all()
@@ -43,13 +50,17 @@ class ProductsListView(ListView):
 
 
 class ProductDetailView(DetailView):
+    """ Отрисовка страницы конкретного товара """
+
     model = Product
     context_object_name = "product"
     template_name = "main/good_detail.html"
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
-    login_url = '/admin/'    
+    """ Отрисовка страницы профиля пользователя """
+
+    login_url = "/admin/"
     template_name = "main/profile.html"
     form_class = ProfileForm
     success_url = "/goods"
@@ -59,9 +70,9 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         return User.objects.get(id=self.request.user.id)
 
 
-
-
 class AddGoodView(CreateView):
+    """ Отрисовка страницы добавления товара """
+
     template_name = "main/add_good_form.html"
     form_class = GoodForm
     model = Product
@@ -69,6 +80,8 @@ class AddGoodView(CreateView):
 
 
 class GoodUpdateView(UpdateView):
+    """ Отрисовка страницы изменения товара """
+
     template_name = "main/update_good_form.html"
     form_class = GoodForm
     model = Product
