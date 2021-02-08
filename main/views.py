@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
@@ -8,13 +9,14 @@ from .models import Product, Tag
 from .forms import ProfileForm, GoodForm
 
 
-def homepage(request):
-    username = (
-        request.user.username if request.user.is_authenticated else "Гость"
-    )
-    return render(
-        request, "main/index.html", {"turn_on_block": True, "name": username},
-    )
+class HomepageView(TemplateView):
+    template_name = "main/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['turn_on_block'] = True
+        context["name"] = self.request.user.username if self.request.user.is_authenticated else "Гость"
+        return context
 
 
 class ProductsListView(ListView):
