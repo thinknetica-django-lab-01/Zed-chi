@@ -15,7 +15,9 @@ def homepage(request):
         request.user.username if request.user.is_authenticated else "Гость"
     )
     return render(
-        request, "main/index.html", {"turn_on_block": True, "name": username},
+        request,
+        "main/index.html",
+        {"turn_on_block": True, "name": username},
     )
 
 
@@ -49,7 +51,7 @@ class ProductDetailView(DetailView):
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
-    login_url = '/admin/'    
+    login_url = "/admin/"
     template_name = "main/profile.html"
     form_class = ProfileForm
     success_url = "/goods"
@@ -57,8 +59,6 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return User.objects.get(id=self.request.user.id)
-
-
 
 
 class AddGoodView(CreateView):
@@ -74,14 +74,17 @@ class GoodUpdateView(UpdateView):
     model = Product
     success_url = "/goods"
 
+
 class SignUpView(allauth_signup):
     template_name = "account/sign_up.html"
     redirect_field_name = "next"
 
+
 class LogInView(allauth_login):
     template_name = "account/log_in.html"
-    redirect_field_name = "next"    
+    redirect_field_name = "next"
+
 
 class LogOutView(allauth_logout):
     template_name = "account/log_out.html"
-    redirect_field_name = "next"    
+    redirect_field_name = "next"

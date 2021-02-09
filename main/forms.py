@@ -40,7 +40,8 @@ class GoodForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea, label="Описание")
     price = forms.IntegerField(label="Цена")
     seller = forms.ModelMultipleChoiceField(
-        queryset=Seller.objects.all(), label="Продавец",
+        queryset=Seller.objects.all(),
+        label="Продавец",
     )
 
     class Meta:
