@@ -1,29 +1,50 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="/">Логотип</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Главная <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/about">О сайте</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/contacts">Контакты</a>
-        </li>                
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Что найти?" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-      </form>
-      {% if request.user.username %}
-        <span class="mx-2 badge badge-secondary">          
-          <a class="text-light" href="/accounts/profile">Профиль {{request.user.username}}</a>
-        </span>
-      {% endif %}
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Главная <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О сайте</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Что найти?" aria-label="Search" />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                Поиск
+            </button>
+        </form>
+
+        
+        {% if user.is_authenticated %}
+        <div class="dropdown dropleft mx-1">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">            
+                <a class="text-light" >{{request.user.username}}</a>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item"  href="/accounts/profile">Профиль</a>
+                <a class="dropdown-item"  href="{% url 'account_email' %}">Изменить email</a>
+                <a class="dropdown-item"  href="{% url 'account_logout' %}">Выход</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="dropdown dropleft mx-1">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Гость
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item"  href="{% url 'account_login' %}">Вход</a>
+                <a class="dropdown-item"  href="{% url 'account_signup' %}">Регистрация</a>
+            </div>
+        </div>
+        {% endif %}
     </div>
-  </nav>
+</nav>
