@@ -1,4 +1,7 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.views.generic.base import TemplateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
@@ -6,18 +9,26 @@ from .models import Product, Tag
 from .forms import ProfileForm, GoodForm
 
 
-def homepage(request):
-    username = (
-        request.user.username if request.user.is_authenticated else "Гость"
-    )
-    return render(
-        request, "main/index.html", {"turn_on_block": True, "name": username},
-    )
+class HomepageView(TemplateView):
+    """ Отрисовка начальной страницы """
+
+    template_name = "main/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["turn_on_block"] = True
+        context["name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Гость"
+        )
+        return context
 
 
 class ProductsListView(ListView):
-    paginate_by = 10
+    """ Отрисовка страницы товаров """
 
+    paginate_by = 10
     model = Product
     context_object_name = "products"
     queryset = Product.objects.all()
@@ -39,12 +50,17 @@ class ProductsListView(ListView):
 
 
 class ProductDetailView(DetailView):
+    """ Отрисовка страницы конкретного товара """
+
     model = Product
     context_object_name = "product"
     template_name = "main/good_detail.html"
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
+    """ Отрисовка страницы профиля пользователя """
+
+    login_url = "/admin/"
     template_name = "main/profile.html"
     form_class = ProfileForm
     success_url = "/goods"
@@ -53,14 +69,10 @@ class ProfileView(UpdateView):
     def get_object(self):
         return User.objects.get(id=self.request.user.id)
 
-    def get(self, request, *args, **kwargs):
-        if not self.request.user.username:
-            return redirect("main:homepage")
-
-        return super().get(request, *args, **kwargs)
-
 
 class AddGoodView(CreateView):
+    """ Отрисовка страницы добавления товара """
+
     template_name = "main/add_good_form.html"
     form_class = GoodForm
     model = Product
@@ -68,6 +80,8 @@ class AddGoodView(CreateView):
 
 
 class GoodUpdateView(UpdateView):
+    """ Отрисовка страницы изменения товара """
+
     template_name = "main/update_good_form.html"
     form_class = GoodForm
     model = Product
