@@ -1,0 +1,45 @@
+{% extends "../main/base.html" %}
+{% load i18n %}
+{% load main_tags %}
+{% load account %}
+{% load socialaccount %}
+{% user_display user %}
+
+{% block title %} 
+    {% trans "Signup" %}
+{% endblock %}
+
+{% block header %}
+    {% include "../main/header.html"%}   
+{% endblock %}
+
+{% block content %} 
+    {% get_providers as socialaccount_providers %}
+    
+
+    <div class="row">
+        <h1>Регистрация</h1>        
+    </div>    
+
+    <div class="row">        
+        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button type="submit">Зарегистрироваться &raquo;</button>
+        </form>
+    </div>
+
+    <div class="row">
+        <p>{% blocktrans %}Уже зарегистрированы? Перейдите на <a href="{{ login_url }}">страницу входа</a>.{% endblocktrans %}</p>        
+    </div>
+
+    <div class="row">
+        <p>Либо вы можете войти посредством:</p>
+        <ul class="socialaccount_providers">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        </ul>
+    </div>
+{% endblock %}
