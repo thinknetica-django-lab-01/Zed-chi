@@ -1,5 +1,5 @@
 from django.contrib.flatpages import views
-from django.urls import path
+from django.urls import path, include
 
 from .views import (
     HomepageView,
@@ -8,6 +8,9 @@ from .views import (
     ProfileView,
     AddGoodView,
     GoodUpdateView,
+    SignUpView,
+    LogInView,
+    LogOutView,
 )
 
 app_name = "main"
@@ -20,4 +23,7 @@ urlpatterns = [
     path("goods/<int:pk>/edit", GoodUpdateView.as_view(), name="update_good"),
     path("goods/<int:pk>", ProductDetailView.as_view(), name="good_detail"),
     path("accounts/profile/", ProfileView.as_view(), name="profile_page"),
+    path("accounts/signup/", SignUpView.as_view(), name="sign_up_page"),
+    path("accounts/login/", LogInView.as_view(), name="log_in_page"),
+    path("accounts/logout/", LogOutView.as_view(), name="log_out_page"),
 ]

@@ -73,5 +73,5 @@ class Seller(User):
     description = models.TextField(
         max_length=500,
         null=False,
-        blank=True,        
+        blank=True,
     )

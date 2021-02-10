@@ -4,7 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-
+from allauth.account.views import SignupView as allauth_signup
+from allauth.account.views import LoginView as allauth_login
+from allauth.account.views import LogoutView as allauth_logout
 from .models import Product, Tag
 from .forms import ProfileForm, GoodForm
 
@@ -86,3 +88,18 @@ class GoodUpdateView(UpdateView):
     form_class = GoodForm
     model = Product
     success_url = "/goods"
+
+
+class SignUpView(allauth_signup):
+    template_name = "account/sign_up.html"
+    redirect_field_name = "next"
+
+
+class LogInView(allauth_login):
+    template_name = "account/log_in.html"
+    redirect_field_name = "next"
+
+
+class LogOutView(allauth_logout):
+    template_name = "account/log_out.html"
+    redirect_field_name = "next"
