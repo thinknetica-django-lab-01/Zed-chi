@@ -9,6 +9,7 @@ from allauth.account.views import LoginView as allauth_login
 from allauth.account.views import LogoutView as allauth_logout
 from .models import Product, Tag
 from .forms import ProfileForm, GoodForm, UserSignUpForm
+from .auth_utils import group_required, GroupRequiredMixin
 
 
 class HomepageView(TemplateView):
@@ -72,18 +73,21 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         return User.objects.get(id=self.request.user.id)
 
 
-class AddGoodView(CreateView):
+class AddGoodView(GroupRequiredMixin, CreateView):
     """ Отрисовка страницы добавления товара """
-
+    
+    group_required = ["Sellers",]
     template_name = "main/add_good_form.html"
     form_class = GoodForm
     model = Product
     success_url = "/goods"
 
 
-class GoodUpdateView(UpdateView):
+
+class GoodUpdateView(GroupRequiredMixin, UpdateView):
     """ Отрисовка страницы изменения товара """
 
+    group_required = ["Sellers"]
     template_name = "main/update_good_form.html"
     form_class = GoodForm
     model = Product
