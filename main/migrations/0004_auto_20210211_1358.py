@@ -6,10 +6,10 @@ from django.db import models, migrations
 def apply_migration(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
     Group.objects.bulk_create([
-        Group(name='Seller'),
-        Group(name='AuthorizedUser'),
-        Group(name='Guest'),
-        Group(name='Moderator'),
+        Group(name='Sellers'),
+        Group(name='CommonUsers'),
+        Group(name='Guests'),
+        Group(name='Moderators'),
     ])
 
 
@@ -17,10 +17,10 @@ def revert_migration(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
     Group.objects.filter(
         name__in=[
-            "Seller",
-            "AuthorizedUser",
-            'Guest',
-            "Moderator"
+            "Sellers",
+            "CommonUsers",
+            'Guests',
+            "Moderators"
         ]
     ).delete()
 
