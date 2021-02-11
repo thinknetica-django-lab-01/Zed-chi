@@ -8,7 +8,7 @@ from allauth.account.views import SignupView as allauth_signup
 from allauth.account.views import LoginView as allauth_login
 from allauth.account.views import LogoutView as allauth_logout
 from .models import Product, Tag
-from .forms import ProfileForm, GoodForm
+from .forms import ProfileForm, GoodForm, UserSignUpForm
 
 
 class HomepageView(TemplateView):
@@ -93,6 +93,7 @@ class GoodUpdateView(UpdateView):
 class SignUpView(allauth_signup):
     template_name = "account/sign_up.html"
     redirect_field_name = "next"
+    form_class = UserSignUpForm
 
 
 class LogInView(allauth_login):
