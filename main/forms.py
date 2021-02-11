@@ -1,6 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
+from allauth.account.forms import SignupForm
+from allauth.account.adapter import get_adapter
 
 from .models import Seller, Product
 
@@ -47,3 +49,14 @@ class GoodForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ["name", "description", "price", "seller"]
+
+
+class UserSignUpForm(SignupForm):
+    def save(self, request):
+        adapter = get_adapter(request)
+        user = adapter.new_user(request)
+        group = Group.objects.get(name="CommonUsers")
+        group.user_set.add(user)
+        adapter.save_user(request, user, self)
+        self.custom_signup(request, user)        
+        return user
