@@ -141,6 +141,9 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 
 # allauth
+LOGIN_URL = "accounts/signin"
+LOGIN_REDIRECT_URL = "/"
+
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
