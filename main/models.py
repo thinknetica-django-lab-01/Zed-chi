@@ -75,3 +75,8 @@ class Seller(User):
         null=False,
         blank=True,
     )
+
+    class Meta:
+        verbose_name = "Продавец"
+        verbose_name_plural = "Продавцы"
+
