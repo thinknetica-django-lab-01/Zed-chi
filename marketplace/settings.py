@@ -164,3 +164,17 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+
+# email 
+ACCOUNT_AUTHENTICATION_METHOD="username"
+#DEFAULT_FROM_EMAIL = 'admin@test.com'
+#SERVER_EMAIL = 'admin@test.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_USE_TLS = True
+#EMAIL_HOST = 'mail.test.com'
+#EMAIL_HOST_USER = 'admin@test.com'
+#EMAIL_HOST_PASSWORD = '1234'
+#EMAIL_PORT = 587
+#ACCOUNT_EMAIL_VERIFICATION=True
+#ACCOUNT_CONFIRM_EMAIL_ON_GET = True
