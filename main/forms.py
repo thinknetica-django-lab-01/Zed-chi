@@ -5,6 +5,9 @@ from allauth.account.forms import SignupForm
 from allauth.account.adapter import get_adapter
 
 from .models import Seller, Product
+from allauth.account.utils import (    
+    setup_user_email,    
+)
 
 
 class ProfileForm(forms.ModelForm):
@@ -52,11 +55,14 @@ class GoodForm(forms.ModelForm):
 
 
 class UserSignUpForm(SignupForm):
-    def save(self, request):
+    class Meta:
+        model = User
+    def save(self, request):        
         adapter = get_adapter(request)
-        user = adapter.new_user(request)
-        group = Group.objects.get(name="CommonUsers")
-        group.user_set.add(user)
+        user = adapter.new_user(request)                        
+        group = Group.objects.get(name="CommonUsers")        
         adapter.save_user(request, user, self)
-        self.custom_signup(request, user)        
+        group.user_set.add(user)
+        self.custom_signup(request, user)
+        setup_user_email(request, user, [])       
         return user
