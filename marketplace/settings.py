@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "main",
+    "django_apscheduler",
 ]
 
 MIDDLEWARE = [
