@@ -1,0 +1,47 @@
+{% extends "account/email/base_message.txt" %}
+{% load account %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Message</title>
+</head>
+
+<body>
+    <table border="0" cellpadding="5" style="
+                width: 100%;
+                background: linear-gradient(#106b75, #e8c31c);
+                margin: 0;
+                padding: 0;
+                font-family: sans-serif;
+            ">
+        <thead style="
+                    background: linear-gradient(to bottom, #8b13ec, #1abc9c);
+                    color: white;
+                ">
+            <tr>
+                <th colspan="3">&#9998; Доброго вечера</th>
+            </tr>
+        </thead>
+
+        <tbody style="background: rgba(230, 250, 230, 0.3); height: 80vh">
+            <tr>
+                <td colspan="3" height="100" contenteditable="true">
+                    {% block content %}
+                        {% autoescape off %}
+                        {% user_display user as user_display %}
+                        {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+                        You're receiving this e-mail because user {{ user_display }} has given your e-mail address to register an account on {{ site_domain }}.
+
+                        To confirm this is correct, go to {{ activate_url }}
+                        {% endblocktrans %}
+                        {% endautoescape %}
+                    {% endblock %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
