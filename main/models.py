@@ -1,5 +1,11 @@
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.urls import reverse
+from django.contrib.sites.models import Site
+
 
 
 class Product(models.Model):
@@ -80,3 +86,22 @@ class Seller(User):
         verbose_name = "Продавец"
         verbose_name_plural = "Продавцы"
 
+class Subscriber(models.Model):    
+    user = models.ForeignKey(User, related_name="subscribtions", on_delete=models.CASCADE)
+
+# TODO написать сигнал подписки на обновления
+
+@receiver(post_save, sender=Product)
+def notify(sender, instance, **kwargs):
+    for subscription in Subscriber.objects.all():
+        print(instance)
+        email = subscription.user.email
+        name = subscription.user.username
+        message = f"""
+            Добрый день {name}.
+            У нас в продаже появился новый продукт: {instance.name}.
+            Для просмотра пройдите по ссылке www.{Site.objects.get_current().domain}{reverse("main:good_detail", args=[instance.id,])} .
+        """
+        send_mail(
+            "Поступление новых продуктов",message,"",[email,]
+        )
