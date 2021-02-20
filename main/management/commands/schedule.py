@@ -7,14 +7,20 @@ from apscheduler.triggers.cron import CronTrigger
 from django.core.management.base import BaseCommand
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
+from main.models import Subscriber, Product
+from django.utils import timezone
+from datetime import timedelta
+from django.core.mail import send_mail
 
 
 logger = logging.getLogger(__name__)
 
 
 def my_job():
-    #  Your job processing logic here... 
-    pass
+    week_ago = timezone.now() - timedelta(days=7)
+    products_of_the_week = Product.objects.filter(created_on__gt=week_ago)
+    
+
 
 def delete_old_job_executions(max_age=604_800):
     """This job deletes all apscheduler job executions older than `max_age` from the database."""
