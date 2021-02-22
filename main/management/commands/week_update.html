@@ -7,11 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-
-    {% for product in products%}
+    <h2>
+        Новые товары недели:
+    </h2>
+    
+    <ul>
+        {% for product in products%}
         <li>
             {{product.title}}            
         </li>
-    {% endfor %}
+        {% endfor %}
+    </ul>    
 </body>
 </html>
