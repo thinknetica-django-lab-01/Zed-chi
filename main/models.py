@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.contrib.sites.models import Site
+from django.utils import timezone
 
 
 
@@ -13,6 +14,8 @@ class Product(models.Model):
     description = models.TextField("описание", max_length=300, blank=True)
     price = models.DecimalField("цена", max_digits=8, decimal_places=2)
     seller = models.ForeignKey("Seller", on_delete=models.CASCADE)
+    created_on = models.DateTimeField("создано", default=timezone.now, db_index=True,)
+    updated_on = models.DateTimeField("обновлено", null=True, blank=True, db_index=True,)
     category = models.ForeignKey(
         "ProductCategory",
         null=True,
