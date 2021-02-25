@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.urls import reverse
 from django.contrib.sites.models import Site
 from django.utils import timezone
+from .tasks import send_new_product_letter
 
 
 
@@ -96,15 +97,4 @@ class Subscriber(models.Model):
 
 @receiver(post_save, sender=Product)
 def notify(sender, instance, **kwargs):
-    for subscription in Subscriber.objects.all():
-        print(instance)
-        email = subscription.user.email
-        name = subscription.user.username
-        message = f"""
-            Добрый день {name}.
-            У нас в продаже появился новый продукт: {instance.name}.
-            Для просмотра пройдите по ссылке www.{Site.objects.get_current().domain}{reverse("main:good_detail", args=[instance.id,])} .
-        """
-        send_mail(
-            "Поступление новых продуктов",message,"",[email,]
-        )
+    send_new_product_letter.delay(instance)
