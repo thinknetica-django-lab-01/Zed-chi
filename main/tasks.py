@@ -29,3 +29,23 @@ def send_new_product_letter(product):
         send_mail(
             "Поступление новых продуктов",message,"",[email,]
         )
+
+
+@app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):    
+    # Executes every Monday morning at 7:30 a.m.
+    sender.add_periodic_task(
+        crontab(hour=7, minute=30, day_of_week=1),
+        send_week_updates.s(),
+    )
+
+@app.task
+def send_week_updates():
+    logger.info("Sent new products of the week")
+    week_ago = timezone.now() - timedelta(days=7)
+    products_of_the_week = Product.objects.filter(created_on__gt=week_ago)
+    if not products_of_the_week:
+        return
+    content = loader.render_to_string("./week_update.html",{"products":products_of_the_week}, None)
+    for subscribe in Subscriber.objects.all():
+        send_mail("Товары недели", content, None, [subscribe.user.email,])    
