@@ -3,3 +3,4 @@ django-ckeditor==6.0
 django-allauth==0.44
 environs==5.2.1
 django-apscheduler==0.5.2 
+celery==4.*
